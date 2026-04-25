@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChaiTailwind — Utility-First CSS Engine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/base.css">
+  <script src="src/config.js"></script>
+  <script src="src/utilities.js"></script>
+  <script src="src/chaiTailwind.js"></script>
+  <style>
+    .hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .hover-lift:hover { transform: translateY(-4px); box-shadow: 8px 8px 0px 0px #0a0a0a; }
+    .btn-primary { transition: transform 0.15s ease, background-color 0.15s ease; }
+    .btn-primary:hover { transform: scale(1.02); background-color: #c1121f; }
+    .btn-primary:active { transform: scale(0.98); }
+    .link-underline { position: relative; }
+    .link-underline::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background-color: #e63946; transition: width 0.3s ease; }
+    .link-underline:hover::after { width: 100%; }
+    .code-block { font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-in { animation: fadeInUp 0.6s ease forwards; }
+    .playground-input:focus { border-color: #e63946 !important; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="chai-bg-offwhite chai-border-b-2 chai-border-black chai-py-4 chai-px-8 chai-flex chai-items-center chai-justify-between chai-sticky chai-top-0 chai-z-50" style="background-color: rgba(250,249,246,0.95); backdrop-filter: blur(8px);">
+    <div class="chai-flex chai-items-center chai-gap-3">
+      <div class="chai-w-8 chai-h-8 chai-bg-red chai-rounded-md chai-flex chai-items-center chai-justify-center" style="background-color: #e63946;">
+        <span class="chai-text-white chai-font-black chai-text-lg">C</span>
+      </div>
+      <span class="chai-font-bold chai-text-xl chai-tracking-tight">ChaiTailwind</span>
+    </div>
+    <div class="chai-flex chai-items-center chai-gap-8">
+      <a href="#how" class="chai-text-sm chai-font-medium link-underline">How it Works</a>
+      <a href="#utilities" class="chai-text-sm chai-font-medium link-underline">Utilities</a>
+      <a href="#playground" class="chai-text-sm chai-font-medium link-underline">Playground</a>
+      <a href="#demo" class="chai-text-sm chai-font-medium link-underline">Demo</a>
+      <a href="https://github.com" target="_blank" class="chai-bg-black chai-text-white chai-px-5 chai-py-2 chai-rounded-md chai-text-sm chai-font-semibold btn-primary" style="background-color: #0a0a0a;">GitHub</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="chai-py-24 chai-px-8 chai-text-center chai-max-w-5xl chai-mx-auto">
+    <div class="animate-in">
+      <p class="chai-text-sm chai-font-semibold chai-uppercase chai-tracking-widest chai-mb-6" style="color: #e63946;">Build Your Own CSS Engine</p>
+      <h1 class="chai-text-6xl chai-font-black chai-leading-tight chai-mb-6" style="letter-spacing: -0.03em;">Write classes.<br><span style="color: #e63946;">Get styles.</span></h1>
+      <p class="chai-text-xl chai-max-w-2xl chai-mx-auto chai-mb-10 chai-leading-relaxed" style="color: #444;">A lightweight utility-first CSS engine that parses <code class="chai-bg-black chai-text-white chai-px-2 chai-py-1 chai-rounded-sm chai-text-sm" style="background-color: #0a0a0a;">chai-*</code> classes and applies them as inline styles. No build step. No dependencies.</p>
+      <div class="chai-flex chai-justify-center chai-gap-4">
+        <a href="#playground" class="chai-bg-red chai-text-white chai-px-8 chai-py-4 chai-rounded-lg chai-text-lg chai-font-bold btn-primary" style="background-color: #e63946;">Try Playground</a>
+        <a href="#how" class="chai-bg-white chai-text-black chai-px-8 chai-py-4 chai-rounded-lg chai-text-lg chai-font-bold chai-border-2 chai-border-black btn-primary" style="background-color: #fff;">How it Works</a>
+      </div>
+  </section>
+
+  <!-- CODE PREVIEW -->
+  <section class="chai-py-16 chai-px-8 chai-bg-black" style="background-color: #0a0a0a;">
+    <div class="chai-max-w-4xl chai-mx-auto">
+      <div class="chai-flex chai-items-center chai-gap-2 chai-mb-4">
+        <div class="chai-w-3 chai-h-3 chai-rounded-full" style="background-color: #ff5f56;"></div>
+        <div class="chai-w-3 chai-h-3 chai-rounded-full" style="background-color: #ffbd2e;"></div>
+        <div class="chai-w-3 chai-h-3 chai-rounded-full" style="background-color: #27c93f;"></div>
+        <span class="chai-text-white chai-text-sm chai-ml-4 chai-opacity-60">index.html</span>
+      </div>
+      <pre class="code-block chai-text-base chai-leading-relaxed" style="color: #f4f4f0;"><code><<span style="color: #ff5f56;">div</span> <span style="color: #ffbd2e;">class</span>=<span style="color: #27c93f;">"chai-bg-red chai-p-6 chai-rounded-xl chai-shadow-lg"</span>>
+  <<span style="color: #ff5f56;">h2</span> <span style="color: #ffbd2e;">class</span>=<span style="color: #27c93f;">"chai-text-2xl chai-font-bold chai-mb-2"</span>>
+    Hello ChaiTailwind
+  </<span style="color: #ff5f56;">h2</span>>
+  <<span style="color: #ff5f56;">p</span> <span style="color: #ffbd2e;">class</span>=<span style="color: #27c93f;">"chai-text-base chai-opacity-80"</span>>
+    No build tools. Just classes.
+  </<span style="color: #ff5f56;">p</span>>
+</<span style="color: #ff5f56;">div</span>></code></pre>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- HOW IT WORKS -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="how" class="chai-py-20 chai-px-8">
+    <div class="chai-max-w-5xl chai-mx-auto">
+      <p class="chai-text-sm chai-font-semibold chai-uppercase chai-tracking-widest chai-mb-4 chai-text-center" style="color: #e63946;">The Process</p>
+      <h2 class="chai-text-4xl chai-font-black chai-text-center chai-mb-16 chai-tracking-tight">How It Works</h2>
+
+      <div class="chai-grid chai-grid-cols-1 chai-grid-cols-3 chai-gap-8">
+
+        <!-- Step 1 -->
+        <div class="chai-bg-white chai-rounded-xl chai-p-8 chai-border-2 chai-border-black hover-lift" style="border-color: #0a0a0a;">
+          <div class="chai-w-12 chai-h-12 chai-rounded-lg chai-flex chai-items-center chai-justify-center chai-mb-6 chai-text-white chai-font-black chai-text-xl" style="background-color: #e63946;">1</div>
+          <h3 class="chai-text-xl chai-font-bold chai-mb-3">Write Classes</h3>
+          <p class="chai-text-base chai-leading-relaxed" style="color: #444;">
+            Add <code class="chai-bg-gray-light chai-px-2 chai-py-1 chai-rounded-sm chai-text-sm" style="background-color: #eee;">chai-*</code> utility classes directly to your HTML elements.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="chai-bg-white chai-rounded-xl chai-p-8 chai-border-2 chai-border-black hover-lift" style="border-color: #0a0a0a;">
+          <div class="chai-w-12 chai-h-12 chai-rounded-lg chai-flex chai-items-center chai-justify-center chai-mb-6 chai-text-white chai-font-black chai-text-xl" style="background-color: #0a0a0a;">2</div>
+          <h3 class="chai-text-xl chai-font-bold chai-mb-3">Engine Scans</h3>
+          <p class="chai-text-base chai-leading-relaxed" style="color: #444;">
+            ChaiTailwind scans the DOM, finds every element with a <code class="chai-bg-gray-light chai-px-2 chai-py-1 chai-rounded-sm chai-text-sm" style="background-color: #eee;">chai-</code> prefix.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="chai-bg-white chai-rounded-xl chai-p-8 chai-border-2 chai-border-black hover-lift" style="border-color: #0a0a0a;">
+          <div class="chai-w-12 chai-h-12 chai-rounded-lg chai-flex chai-items-center chai-justify-center chai-mb-6 chai-text-white chai-font-black chai-text-xl" style="background-color: #e63946;">3</div>
+          <h3 class="chai-text-xl chai-font-bold chai-mb-3">Styles Applied</h3>
+          <p class="chai-text-base chai-leading-relaxed" style="color: #444;">
+            Inline styles are computed and applied. Original classes are cleaned up automatically.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- UTILITIES SHOWCASE -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="utilities" class="chai-py-20 chai-px-8 chai-bg-white" style="background-color: #fff;">
+    <div class="chai-max-w-5xl chai-mx-auto">
+      <p class="chai-text-sm chai-font-semibold chai-uppercase chai-tracking-widest chai-mb-4 chai-text-center" style="color: #e63946;">The Toolkit</p>
+      <h2 class="chai-text-4xl chai-font-black chai-text-center chai-mb-16 chai-tracking-tight">Utility Showcase</h2>
+
+      <!-- Spacing -->
+      <div class="chai-mb-12">
+        <h3 class="chai-text-2xl chai-font-bold chai-mb-6">Spacing</h3>
+        <div class="chai-flex chai-flex-col chai-gap-4 chai-bg-offwhite chai-p-6 chai-rounded-xl" style="background-color: #faf9f6;">
+          <div class="chai-flex chai-items-center chai-gap-6">
+            <span class="chai-w-16 chai-text-right chai-text-sm chai-font-medium chai-opacity-60">p-2</span>
+            <div class="chai-bg-red chai-rounded-md" style="background-color: #e63946; padding: 8px;">
+              <div class="chai-bg-white chai-px-4 chai-py-2 chai-rounded-sm chai-text-sm chai-font-medium" style="background-color: #fff;">Content</div>
+            </div>
+          </div>
+          <div class="chai-flex chai-items-center chai-gap-6">
+            <span class="chai-w-16 chai-text-right chai-text-sm chai-font-medium chai-opacity-60">p-4</span>
+            <div class="chai-bg-red chai-rounded-md" style="background-color: #e63946; padding: 16px;">
+              <div class="chai-bg-white chai-px-4 chai-py-2 chai-rounded-sm chai-text-sm chai-font-medium" style="background-color: #fff;">Content</div>
+            </div>
+          </div>
+          <div class="chai-flex chai-items-center chai-gap-6">
+            <span class="chai-w-16 chai-text-right chai-text-sm chai-font-medium chai-opacity-60">p-6</span>
+            <div class="chai-bg-red chai-rounded-md" style="background-color: #e63946; padding: 24px;">
+              <div class="chai-bg-white chai-px-4 chai-py-2 chai-rounded-sm chai-text-sm chai-font-medium" style="background-color: #fff;">Content</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Colors -->
+      <div class="chai-mb-12">
+        <h3 class="chai-text-2xl chai-font-bold chai-mb-6">Colors</h3>
+        <div class="chai-grid chai-grid-cols-2 chai-grid-cols-4 chai-grid-cols-6 chai-gap-4">
+          <div class="chai-bg-black chai-text-white chai-p-5 chai-rounded-xl chai-text-center chai-font-semibold chai-text-sm hover-lift" style="background-color: #0a0a0a;">black</div>
+          <div class="chai-bg-white chai-text-black chai-p-5 chai-rounded-xl chai-text-center chai-font-semibold chai-text-sm chai-border-2 chai-border-black hover-lift" style="border-color: #0a0a0a;">white</div>
+          <div class="chai-bg-red chai-text-white chai-p-5 chai-rounded-xl chai-text-center chai-font-semibold chai-text-sm hover-lift" style="background-color: #e63946;">red</div>
+          <div class="chai-bg-offwhite chai-text-black chai-p-5 chai-rounded-xl chai-text-center chai-font-semibold chai-text-sm chai-border-2 chai-border-black hover-lift" style="border-color: #0a0a0a; background-color: #faf9f6;">offwhite</div>
+        </div>
+      </div>
+
+      <!-- Typography -->
+      <div class="chai-mb-12">
+        <h3 class="chai-text-2xl chai-font-bold chai-mb-6">Typography</h3>
+        <div class="chai-bg-offwhite chai-p-8 chai-rounded-xl" style="background-color: #faf9f6;">
+          <p class="chai-text-xs chai-mb-2 chai-opacity-50"> chai-text-xs</p>
+          <p class="chai-text-sm chai-mb-2 chai-opacity-60"> chai-text-sm</p>
+          <p class="chai-text-base chai-mb-2"> chai-text-base</p>
+          <p class="chai-text-lg chai-mb-2 chai-font-medium"> chai-text-lg</p>
+          <p class="chai-text-xl chai-mb-2 chai-font-semibold"> chai-text-xl</p>
+          <p class="chai-text-2xl chai-mb-2 chai-font-bold"> chai-text-2xl</p>
+          <p class="chai-text-3xl chai-mb-2 chai-font-extrabold"> chai-text-3xl</p>
+          <p class="chai-text-4xl chai-font-black"> chai-text-4xl</p>
+        </div>
+      </div>
+
+      <!-- Flexbox -->
+      <div class="chai-mb-12">
+        <h3 class="chai-text-2xl chai-font-bold chai-mb-6">Flexbox</h3>
+        <div class="chai-bg-white chai-p-6 chai-rounded-xl chai-border-2 chai-border-black" style="border-color: #0a0a0a;">
+          <div class="chai-flex chai-justify-between chai-items-center chai-bg-offwhite chai-p-4 chai-rounded-lg chai-mb-4" style="background-color: #faf9f6;">
+            <div class="chai-bg-black chai-text-white chai-px-4 chai-py-2 chai-rounded-md chai-font-semibold chai-text-sm" style="background-color: #0a0a0a;">Left</div>
+            <div class="chai-bg-red chai-text-white chai-px-4 chai-py-2 chai-rounded-md chai-font-semibold chai-text-sm" style="background-color: #e63946;">Center</div>
+            <div class="chai-bg-black chai-text-white chai-px-4 chai-py-2 chai-rounded-md chai-font-semibold chai-text-sm" style="background-color: #0a0a0a;">Right</div>
+          </div>
+          <p class="chai-text-sm chai-text-center chai-opacity-50"> chai-flex chai-justify-between chai-items-center</p>
+        </div>
+      </div>
+
+      <!-- Grid -->
+      <div class="chai-mb-12">
+        <h3 class="chai-text-2xl chai-font-bold chai-mb-6">Grid</h3>
+        <div class="chai-bg-white chai-p-6 chai-rounded-xl chai-border-2 chai-border-black" style="border-color: #0a0a0a;">
+          <div class="chai-grid chai-grid-cols-3 chai-gap-4 chai-mb-4">
+            <div class="chai-bg-red chai-text-white chai-p-4 chai-rounded-lg chai-text-center chai-font-bold" style="background-color: #e63946;">1</div>
+            <div class="chai-bg-black chai-text-white chai-p-4 chai-rounded-lg chai-text-center chai-font-bold" style="background-color: #0a0a0a;">2</div>
+            <div class="chai-bg-red chai-text-white chai-p-4 chai-rounded-lg chai-text-center chai-font-bold" style="background-color: #e63946;">3</div>
+            <div class="chai-bg-black chai-text-white chai-p-4 chai-rounded-lg chai-text-center chai-font-bold" style="background-color: #0a0a0a;">4</div>
+            <div class="chai-bg-red chai-text-white chai-p-4 chai-rounded-lg chai-text-center chai-bold" style="background-color: #e63946;">5</div>
+            <div class="chai-bg-black chai-text-white chai-p-4 chai-rounded-lg chai-text-center chai-font-bold" style="background-color: #0a0a0a;">6</div>
+          </div>
+          <p class="chai-text-sm chai-text-center chai-opacity-50"> chai-grid chai-grid-cols-3 chai-gap-4</p>
+        </div>
+      </div>
+
+      <!-- Border Radius -->
+      <div class="chai-mb-12">
+        <h3 class="chai-text-2xl chai-font-bold chai-mb-6">Border Radius</h3>
+        <div class="chai-flex chai-flex-wrap chai-gap-4 chai-items-center">
+          <div class="chai-bg-black chai-text-white chai-px-6 chai-py-4 chai-font-bold chai-text-sm" style="background-color: #0a0a0a; border-radius: 0px;">none</div>
+          <div class="chai-bg-black chai-text-white chai-px-6 chai-py-4 chai-font-bold chai-text-sm" style="background-color: #0a0a0a; border-radius: 2px;">sm</div>
+          <div class="chai-bg-black chai-text-white chai-px-6 chai-py-4 chai-font-bold chai-text-sm" style="background-color: #0a0a0a; border-radius: 4px;">md</div>
+          <div class="chai-bg-red chai-text-white chai-px-6 chai-py-4 chai-font-bold chai-text-sm" style="background-color: #e63946; border-radius: 8px;">lg</div>
+          <div class="chai-bg-red chai-text-white chai-px-6 chai-py-4 chai-font-bold chai-text-sm" style="background-color: #e63946; border-radius: 12px;">xl</div>
+          <div class="chai-bg-red chai-text-white chai-px-6 chai-py-4 chai-font-bold chai-text-sm" style="background-color: #e63946; border-radius: 9999px;">full</div>
+        </div>
+      </div>
+
+      <!-- Shadows -->
+      <div>
+        <h3 class="chai-text-2xl chai-font-bold chai-mb-6">Shadows</h3>
+        <div class="chai-flex chai-flex-wrap chai-gap-6 chai-items-center">
+          <div class="chai-bg-white chai-px-6 chai-py-4 chai-font-bold chai-text-sm chai-rounded-lg" style="box-shadow: 2px 2px 0px 0px #0a0a0a;">sm</div>
+          <div class="chai-bg-white chai-px-6 chai-py-4 chai-font-bold chai-text-sm chai-rounded-lg" style="box-shadow: 4px 4px 0px 0px #0a0a0a;">md</div>
+          <div class="chai-bg-white chai-px-6 chai-py-4 chai-font-bold chai-text-sm chai-rounded-lg" style="box-shadow: 6px 6px 0px 0px #0a0a0a;">lg</div>
+          <div class="chai-bg-red chai-text-white chai-px-6 chai-py-4 chai-font-bold chai-text-sm chai-rounded-lg" style="box-shadow: 6px 6px 0px 0px #e63946; background-color: #e63946;">brutal</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- PASTE THIS INTO YOUR index.html, right before the <footer> tag -->
+
+    <!-- PLAYGROUND - FIXED VERSION -->
+<section id="playground" class="chai-py-20 chai-px-8 chai-bg-offwhite" style="background-color: #faf9f6;">
+  <div class="chai-max-w-5xl chai-mx-auto">
+    <p class="chai-text-sm chai-font-semibold chai-uppercase chai-tracking-widest chai-mb-4 chai-text-center" style="color: #e63946;">Interactive</p>
+    <h2 class="chai-text-4xl chai-font-black chai-text-center chai-mb-4 chai-tracking-tight">Playground</h2>
+    <p class="chai-text-lg chai-text-center chai-mb-10 chai-max-w-2xl chai-mx-auto" style="color: #444;">
+      Type chai-* classes below and see them applied instantly. Try presets or write your own.
+    </p>
+
+    <div class="chai-grid chai-grid-cols-1 chai-gap-8">
+
+      <!-- Controls -->
+      <div class="chai-bg-white chai-rounded-xl chai-p-6 chai-border-2 chai-border-black" style="border-color: #0a0a0a;">
+        <label class="chai-text-sm chai-font-semibold chai-mb-3 chai-block">Classes</label>
+        <textarea id="pgInput" rows="3" class="chai-w-full chai-p-4 chai-rounded-lg chai-border-2 chai-border-black chai-text-base chai-font-mono chai-mb-4 chai-resize-none" style="border-color: #ddd; outline: none; font-family: 'SF Mono', Monaco, monospace;" placeholder="chai-bg-red chai-p-6 chai-rounded-xl chai-text-white">chai-bg-red chai-p-6 chai-rounded-xl chai-text-white chai-font-bold chai-text-center</textarea>
+
+        <label class="chai-text-sm chai-font-semibold chai-mb-3 chai-block">Content</label>
+        <input id="pgContent" type="text" class="chai-w-full chai-p-4 chai-rounded-lg chai-border-2 chai-border-black chai-text-base chai-mb-6" style="border-color: #ddd; outline: none;" value="Hello ChaiTailwind!" />
+
+        <label class="chai-text-sm chai-font-semibold chai-mb-3 chai-block">Quick Presets</label>
+        <div class="chai-flex chai-flex-wrap chai-gap-2 chai-mb-6">
+          <button onclick="applyPreset('chai-bg-red chai-p-6 chai-rounded-xl chai-text-white chai-font-bold chai-text-center')" class="chai-bg-red chai-text-white chai-px-3 chai-py-2 chai-rounded-md chai-text-xs chai-font-semibold chai-cursor-pointer btn-primary" style="background-color: #e63946;">Red Card</button>
+          <button onclick="applyPreset('chai-bg-black chai-p-6 chai-rounded-xl chai-text-white chai-font-bold chai-border-2 chai-border-red')" class="chai-bg-black chai-text-white chai-px-3 chai-py-2 chai-rounded-md chai-text-xs chai-font-semibold chai-cursor-pointer btn-primary" style="background-color: #0a0a0a;">Dark Card</button>
+          <button onclick="applyPreset('chai-bg-white chai-p-6 chai-rounded-xl chai-text-black chai-font-bold chai-border-2 chai-border-black chai-shadow-lg')" class="chai-bg-white chai-text-black chai-px-3 chai-py-2 chai-rounded-md chai-text-xs chai-font-semibold chai-cursor-pointer chai-border-2 chai-border-black btn-primary" style="background-color: #fff; border-color: #0a0a0a;">Light Card</button>
+          <button onclick="applyPreset('chai-bg-offwhite chai-p-8 chai-rounded-2xl chai-text-black chai-border-2 chai-border-black chai-flex chai-items-center chai-justify-center chai-gap-4')" class="chai-bg-offwhite chai-text-black chai-px-3 chai-py-2 chai-rounded-md chai-text-xs chai-font-semibold chai-cursor-pointer chai-border-2 chai-border-black btn-primary" style="background-color: #faf9f6; border-color: #0a0a0a;">Flex Row</button>
+          <button onclick="applyPreset('chai-bg-red chai-text-white chai-px-8 chai-py-4 chai-rounded-full chai-font-bold chai-text-lg chai-cursor-pointer chai-shadow-brutal')" class="chai-bg-red chai-text-white chai-px-3 chai-py-2 chai-rounded-md chai-text-xs chai-font-semibold chai-cursor-pointer btn-primary" style="background-color: #e63946;">Pill Button</button>
+          <button onclick="applyPreset('chai-bg-black chai-text-white chai-p-4 chai-rounded-none chai-font-mono chai-text-sm chai-border-l-4 chai-border-red')" class="chai-bg-black chai-text-white chai-px-3 chai-py-2 chai-rounded-md chai-text-xs chai-font-semibold chai-cursor-pointer btn-primary" style="background-color: #0a0a0a;">Code Block</button>
+        </div>
+
+        <div class="chai-flex chai-gap-3">
+          <button id="pgApply" class="chai-flex-1 chai-bg-black chai-text-white chai-py-3 chai-rounded-lg chai-font-bold chai-cursor-pointer btn-primary" style="background-color: #0a0a0a;">Apply Classes</button>
+          <button id="pgCopy" class="chai-flex-1 chai-bg-white chai-text-black chai-py-3 chai-rounded-lg chai-font-bold chai-cursor-pointer chai-border-2 chai-border-black btn-primary" style="background-color: #fff; border-color: #0a0a0a;">Copy HTML</button>
+        </div>
+      <!-- /Controls -->
+
+      <!-- Preview -->
+      <div class="chai-flex chai-flex-col chai-gap-24">
+        <div class="chai-bg-white chai-rounded-xl chai-p-6 chai-border-2 chai-border-black chai-flex-1 chai-flex chai-items-center chai-justify-center chai-min-h-[300px]" style="border-color: #0a0a0a; background-color: #fff;">
+          <div id="pgPreview">
+            <!-- Live preview renders here -->
+          </div>
+        <div class="chai-bg-black chai-rounded-xl chai-p-3 chai-m-4 chai-text-white chai-text-sm chai-font-mono" style="background-color: #0a0a0a;">
+          <div class="chai-flex chai-items-center chai-justify-between chai-mb-2">
+            <span class="chai-opacity-60 chai-text-xs">Generated HTML</span>
+            <span id="pgStatus" class="chai-text-xs chai-font-semibold" style="color: #27c93f;">Ready</span>
+          </div>
+          <code id="pgCode" class="chai-text-xs chai-break-all chai-opacity-80"><div class="...">Hello ChaiTailwind!</div></code>
+        </div>
+      <!-- /Preview -->
+
+  </div>
+</section>
+
+  
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- ARBITRARY VALUES DEMO -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="chai-py-20 chai-px-8">
+    <div class="chai-max-w-4xl chai-mx-auto chai-text-center">
+      <p class="chai-text-sm chai-font-semibold chai-uppercase chai-tracking-widest chai-mb-4" style="color: #e63946;">Power User Feature</p>
+      <h2 class="chai-text-4xl chai-font-black chai-mb-6 chai-tracking-tight">Arbitrary Values</h2>
+      <p class="chai-text-lg chai-mb-10 chai-max-w-2xl chai-mx-auto" style="color: #444;">
+        Need a custom value? Use bracket notation for any color, size, or property.
+      </p>
+      <div class="chai-flex chai-flex-wrap chai-justify-center chai-gap-4 chai-mb-8">
+        <div class="chai-bg-black chai-text-white chai-px-5 chai-py-3 chai-rounded-lg chai-font-mono chai-text-sm" style="background-color: #0a0a0a;">chai-w-[200px]</div>
+        <div class="chai-bg-red chai-text-white chai-px-5 chai-py-3 chai-rounded-lg chai-font-mono chai-text-sm" style="background-color: #e63946;">chai-bg-[#e63946]</div>
+        <div class="chai-bg-black chai-text-white chai-px-5 chai-py-3 chai-rounded-lg chai-font-mono chai-text-sm" style="background-color: #0a0a0a;">chai-text-[1.25rem]</div>
+      </div>
+      <div class="chai-flex chai-justify-center chai-gap-4">
+        <div class="chai-bg-red chai-text-white chai-px-8 chai-py-4 chai-rounded-lg chai-font-bold chai-text-lg" style="background-color: #e63946; width: 200px;">
+          200px wide
+        </div>
+        <div class="chai-bg-offwhite chai-text-black chai-px-8 chai-py-4 chai-rounded-lg chai-font-bold chai-text-lg chai-border-2 chai-border-black" style="background-color: #faf9f6; color: #e63946;">
+          Custom color
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- DYNAMIC CONTENT DEMO -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="demo" class="chai-py-20 chai-px-8 chai-bg-black" style="background-color: #0a0a0a;">
+    <div class="chai-max-w-4xl chai-mx-auto chai-text-center">
+      <p class="chai-text-sm chai-font-semibold chai-uppercase chai-tracking-widest chai-mb-4" style="color: #e63946;">Reactive</p>
+      <h2 class="chai-text-4xl chai-font-black chai-mb-4 chai-tracking-tight chai-text-white">Dynamic Content Test</h2>
+      <p class="chai-text-lg chai-mb-8 chai-text-white chai-opacity-60">
+        Click to add elements. The MutationObserver auto-applies styles instantly.
+      </p>
+      <button id="addBox" class="chai-bg-red chai-text-white chai-px-8 chai-py-4 chai-rounded-lg chai-font-bold chai-text-lg chai-cursor-pointer btn-primary chai-mb-10" style="background-color: #e63946;">
+        + Add Element
+      </button>
+      <div id="dynamicContainer" class="chai-flex chai-flex-wrap chai-justify-center chai-gap-4 chai-min-h-[120px] chai-p-6 chai-rounded-xl" style="background-color: #1a1a1a;">
+        <!-- Dynamic boxes appear here -->
+      </div>
+    </div>
+  </section>
+
+
+  <footer class="chai-py-16 chai-px-8 chai-text-center">
+    <div class="chai-max-w-2xl chai-mx-auto">
+      <h2 class="chai-text-3xl chai-font-black chai-mb-4 chai-tracking-tight">Ready to build?</h2>
+      <p class="chai-text-lg chai-mb-8" style="color: #444;">
+        No install. No config. Just drop the scripts in and start writing classes.
+      </p>
+      <div class="chai-flex chai-justify-center chai-gap-4">
+        <a href="#" class="chai-bg-black chai-text-white chai-px-8 chai-py-4 chai-rounded-lg chai-font-bold chai-text-lg btn-primary" style="background-color: #0a0a0a;">
+          Get Started
+        </a>
+        <a href="https://github.com" target="_blank" class="chai-bg-white chai-text-black chai-px-8 chai-py-4 chai-rounded-lg chai-font-bold chai-text-lg chai-border-2 chai-border-black btn-primary" style="background-color: #fff; border-color: #0a0a0a;">
+          View on GitHub
+        </a>
+      </div>
+      <p class="chai-text-sm chai-mt-12 chai-opacity-40">
+        Built with pure JavaScript. No dependencies.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- DYNAMIC DEMO SCRIPT -->
+  <!-- ═══════════════════════════════════════════ -->
+  <script>
+    (function() {
+      const sizes = ['p-4', 'p-6', 'p-8'];
+      const radius = ['rounded-sm', 'rounded-md', 'rounded-lg', 'rounded-xl'];
+
+      document.getElementById('addBox').addEventListener('click', function() {
+        const container = document.getElementById('dynamicContainer');
+        const sz = sizes[Math.floor(Math.random() * sizes.length)];
+        const rd = radius[Math.floor(Math.random() * radius.length)];
+        const isRed = Math.random() > 0.5;
+
+        const box = document.createElement('div');
+        box.className = isRed
+          ? `chai-bg-red chai-${sz} chai-${rd} chai-text-white chai-font-bold chai-flex chai-items-center chai-justify-center chai-min-w-[80px] chai-min-h-[80px]`
+          : `chai-bg-white chai-${sz} chai-${rd} chai-text-black chai-font-bold chai-flex chai-items-center chai-justify-center chai-min-w-[80px] chai-min-h-[80px] chai-border-2 chai-border-black`;
+        box.textContent = 'NEW';
+
+        container.appendChild(box);
+      });
+    })();
+
+    (function() {
+      const input = document.getElementById('pgInput');
+      const content = document.getElementById('pgContent');
+      const preview = document.getElementById('pgPreview');
+      const code = document.getElementById('pgCode');
+      const status = document.getElementById('pgStatus');
+      const applyBtn = document.getElementById('pgApply');
+      const copyBtn = document.getElementById('pgCopy');
+
+      function updatePreview() {
+        const classes = input.value.trim();
+        const text = content.value.trim() || 'Preview';
+        preview.innerHTML = '';
+        const el = document.createElement('div');
+        el.textContent = text;
+        el.className = classes;
+        preview.appendChild(el);
+        if (window.ChaiTailwind) {
+          ChaiTailwind.process(el);
+        }
+        code.textContent = '<div class="' + classes + '">' + text + '</div>';
+        status.textContent = 'Updated';
+        status.style.color = '#27c93f';
+      }
+
+      applyBtn.addEventListener('click', updatePreview);
+
+      copyBtn.addEventListener('click', function() {
+        const html = code.textContent;
+        navigator.clipboard.writeText(html).then(function() {
+          status.textContent = 'Copied!';
+          status.style.color = '#e63946';
+          setTimeout(function() {
+            status.textContent = 'Ready';
+            status.style.color = '#27c93f';
+          }, 1500);
+        });
+      });
+
+      var timeout;
+      input.addEventListener('input', function() {
+        clearTimeout(timeout);
+        timeout = setTimeout(updatePreview, 400);
+      });
+      content.addEventListener('input', function() {
+        clearTimeout(timeout);
+        timeout = setTimeout(updatePreview, 400);
+      });
+
+      window.applyPreset = function(preset) {
+        input.value = preset;
+        updatePreview();
+      };
+
+      updatePreview();
+    })();
+  </script>
+
+</body>
+</html>
+
