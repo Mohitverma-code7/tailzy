@@ -2,7 +2,7 @@
 
 A **lightweight, utility-first CSS engine** built with vanilla JavaScript. Inspired by Tailwind CSS but designed to be a client-side library that parses `chai-*` classes and applies them as inline styles dynamically.
 
-**Design Theme:** Neo-Brutalism — bold colors, thick black borders, hard shadows, and unapologetic contrast.
+**Design Theme:** Neo-Brutalis bold colors, thick black borders, hard shadows, and unapologetic contrast.
 
 ---
 
@@ -180,10 +180,10 @@ document.body.appendChild(newDiv); // Auto-processed by MutationObserver
 This demo uses a bold Neo-Brutalism aesthetic:
 
 - **Thick black borders** (`chai-border-4 chai-border-black`)
-- **Hard drop shadows** (`chai-shadow-brutal` — no blur, pure offset)
+- **Hard drop shadows** (`chai-shadow-brutal`  no blur, pure offset)
 - **Vibrant, clashing colors** (red, yellow, cyan, lime, pink)
 - **Monospace typography** for that raw, industrial feel
-- **No gradients, no soft edges** — everything is sharp and loud
+- **No gradients, no soft edges**  everything is sharp and loud
 
 ---
 
@@ -256,7 +256,7 @@ Requires `MutationObserver` and modern CSS support.
 
 ## 📄 License
 
-MIT License — free to use, modify, and distribute.
+MIT License free to use, modify, and distribute.
 
 ---
 
