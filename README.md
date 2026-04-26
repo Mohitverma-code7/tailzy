@@ -8,7 +8,7 @@ A **lightweight, utility-first CSS engine** built with vanilla JavaScript. Inspi
 
 ## 🚀 Live Demo
 
-[👉 View Demo](https://your-hosted-link.vercel.app) *(Update with your actual link)*
+[👉 View Demo](https://tailzy.vercel.app/) *(Update with your actual link)*
 
 ---
 
